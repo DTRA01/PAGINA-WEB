@@ -1,0 +1,177 @@
+/* ==========================================================================
+   PREFECTURA NAVAL ARGENTINA - HOJA DE ESTILOS INSTITUCIONAL BASE
+   Versión: 2.0 | Uso: Portal Intranet / Red Interna de Oficina
+   ========================================================================== */
+
+/* 1. VARIABLES INSTITUCIONALES */
+:root {
+  /* Paleta Cromática PNA */
+  --pna-azul-principal: #002B49;    /* Azul Marino Institucional */
+  --pna-azul-oscuro: #001A2E;       /* Azul Profundo / Fondos */
+  --pna-azul-secundario: #004B87;   /* Azul Medio / Interacción */
+  --pna-dorado: #C5A059;            /* Dorado Distintivo */
+  --pna-blanco: #FFFFFF;            
+  --pna-gris-claro: #F4F6F9;        /* Fondo General */
+  --pna-gris-medio: #DEE2E6;        /* Bordes */
+  --pna-texto: #1C252C;             /* Texto Principal */
+
+  /* Estados y Alertas */
+  --pna-rojo-alerta: #D32F2F;
+  --pna-verde-exito: #2E7D32;
+  --pna-amarillo-aviso: #F57F17;
+
+  /* Estructura */
+  --fuente-principal: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --sombras: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radio-borde: 6px;
+}
+
+/* 2. REINICIO Y BASE */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fuente-principal);
+  background-color: var(--pna-gris-claro);
+  color: var(--pna-texto);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* 3. ENCABEZADO INSTITUCIONAL */
+.pna-header {
+  background-color: var(--pna-azul-principal);
+  color: var(--pna-blanco);
+  padding: 1.2rem 2rem;
+  border-bottom: 4px solid var(--pna-dorado);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pna-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* 4. COMPONENTES Y BOTONES */
+.btn-pna {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radio-borde);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.btn-pna-primary {
+  background-color: var(--pna-azul-principal);
+  color: var(--pna-blanco);
+}
+
+.btn-pna-primary:hover {
+  background-color: var(--pna-azul-secundario);
+}
+
+/* 5. TARJETAS DE PROYECTO Y GRILLA */
+.pna-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.pna-search-bar {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border: 2px solid var(--pna-gris-medio);
+  border-radius: var(--radio-borde);
+  margin-bottom: 2rem;
+  outline: none;
+  background-color: var(--pna-blanco);
+}
+
+.pna-search-bar:focus {
+  border-color: var(--pna-azul-secundario);
+}
+
+.pna-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.pna-project-card {
+  background-color: var(--pna-blanco);
+  border: 1px solid var(--pna-gris-medio);
+  border-left: 5px solid var(--pna-azul-principal);
+  border-radius: var(--radio-borde);
+  padding: 1.5rem;
+  box-shadow: var(--sombras);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pna-project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+}
+
+.pna-card-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  width: fit-content;
+}
+
+.badge-operativo { background-color: #E3F2FD; color: #0D47A1; }
+.badge-admin { background-color: #E8F5E9; color: #1B5E20; }
+
+.pna-project-title {
+  font-size: 1.2rem;
+  color: var(--pna-azul-principal);
+  margin-bottom: 0.5rem;
+}
+
+.pna-project-desc {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.pna-alert {
+  padding: 1rem;
+  border-radius: var(--radio-borde);
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--pna-azul-secundario);
+  background-color: #E3F2FD;
+  color: #0D47A1;
+}
+
+/* 6. PIE DE PÁGINA */
+.pna-footer {
+  background-color: var(--pna-azul-oscuro);
+  color: var(--pna-blanco);
+  text-align: center;
+  padding: 1.2rem;
+  margin-top: 3rem;
+  border-top: 3px solid var(--pna-dorado);
+  font-size: 0.85rem;
+}
