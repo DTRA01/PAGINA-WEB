@@ -3,36 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POLIGONO KML</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 1100px; background: white; margin: 0 auto; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #27ae60; padding-bottom: 10px; margin-top: 0; font-size: 26px; letter-spacing: 1px; }
-        p { color: #555; font-size: 14px; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { padding: 8px; border: 1px solid #ddd; text-align: center; }
-        th { background-color: #2c3e50; color: white; font-weight: 600; font-size: 13px; }
-        input, select { padding: 6px; width: 88%; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 13px; box-sizing: border-box; }
-        input[type="text"] { text-align: left; width: 95%; }
-        .btn { color: white; border: none; padding: 10px 15px; font-size: 14px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 10px; margin-bottom: 10px; }
-        .btn-gen { background-color: #27ae60; }
-        .btn-gen:hover { background-color: #219152; }
-        .btn-add { background-color: #2980b9; }
-        .btn-add:hover { background-color: #2471a3; }
-        .btn-rem { background-color: #c0392b; }
-        .btn-rem:hover { background-color: #962d22; }
-        .opciones-kml { background: #f8f9fa; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
-        .opciones-kml label { font-weight: bold; font-size: 14px; color: #2c3e50; }
-        .opciones-kml select { width: auto; padding: 6px 12px; }
-        .actions { margin-top: 15px; }
-    </style>
+    <title>POLIGONO KML — Prefectura Naval Argentina</title>
+    <link rel="stylesheet" href="../../css/pna-base.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>POLIGONO KML</h1>
-    <p>Ingrese los puntos del área en formato Grados, Minutos y Segundos. Seleccione el color deseado para el polígono y presione el botón verde para descargar el archivo directo para Google Earth.</p>
-    
+<header class="pna-header">
+    <div>
+        <h1>Prefectura Naval Argentina</h1>
+        <small style="opacity: 0.85;">Generador de Polígonos KML para Google Earth</small>
+    </div>
+    <div style="text-align: right; font-size: 0.85rem;">
+        <div>Red Interna de Oficina</div>
+        <strong>Navegación / Operaciones</strong>
+    </div>
+</header>
+
+<main class="pna-container">
+
+    <div class="pna-project-card" style="margin-bottom: 20px;">
+        <h2 class="pna-project-title">Delimitación de Áreas Operativas</h2>
+        <p class="pna-project-desc">
+            Ingrese los puntos del área en formato Grados, Minutos y Segundos (GMS)[cite: 3]. Seleccione el color deseado para la traza del polígono y presione el botón para descargar el archivo KML directo para Google Earth[cite: 3].
+        </p>
+    </div>
+
     <table id="tabla-puntos">
         <thead>
             <tr>
@@ -95,7 +90,7 @@
         </tbody>
     </table>
 
-    <div class="opciones-kml">
+    <div class="opciones-kml" style="margin: 20px 0;">
         <label for="color-poligono">🎨 Color del Polígono:</label>
         <select id="color-poligono">
             <option value="verde" selected>Verde Línea / Relleno Transparente</option>
@@ -107,11 +102,17 @@
     </div>
 
     <div class="actions">
-        <button class="btn btn-add" onclick="agregarFila()">+ Agregar Punto</button>
-        <button class="btn btn-rem" onclick="quitarFila()">- Quitar Último Punto</button>
-        <button class="btn btn-gen" onclick="descargarKML()">📥 Generar KML</button>
+        <button class="btn-pna btn-pna-primary" onclick="agregarFila()">+ Agregar Punto</button>
+        <button class="btn-pna btn-pna-primary" style="background-color: var(--pna-rojo-alerta);" onclick="quitarFila()">- Quitar Último Punto</button>
+        <button class="btn-pna btn-pna-primary" style="background-color: var(--pna-verde-exito);" onclick="descargarKML()">📥 Generar KML</button>
+        <a href="../../index.html" class="btn-pna" style="background-color: #6c757d; color: white; text-decoration: none; margin-left: 10px;">Volver al Portal</a>
     </div>
-</div>
+
+</main>
+
+<footer class="pna-footer">
+    <p>Prefectura Naval Argentina — Autoridad Marítima Nacional</p>
+</footer>
 
 <script>
     function agregarFila() {
@@ -155,19 +156,18 @@
     }
 
     function obtenerCodigosColor(colorSeleccionado) {
-        // Formato KML es AABBGGRR (Alpha, Blue, Green, Red)
         switch(colorSeleccionado) {
             case 'rojo':
-                return { linea: 'ff0000ff', relleno: '400000ff' }; // Rojo
+                return { linea: 'ff0000ff', relleno: '400000ff' };
             case 'azul':
-                return { linea: 'ffff0000', relleno: '40ff0000' }; // Azul
+                return { linea: 'ffff0000', relleno: '40ff0000' };
             case 'amarillo':
-                return { linea: 'ff00ffff', relleno: '4000ffff' }; // Amarillo
+                return { linea: 'ff00ffff', relleno: '4000ffff' };
             case 'naranja':
-                return { linea: 'ff00a5ff', relleno: '4000a5ff' }; // Naranja
+                return { linea: 'ff00a5ff', relleno: '4000a5ff' };
             case 'verde':
             default:
-                return { linea: 'ff00ff00', relleno: '4000ff00' }; // Verde original
+                return { linea: 'ff00ff00', relleno: '4000ff00' };
         }
     }
 
@@ -210,7 +210,6 @@
         coordenadasKML.push(primerPunto);
         const listaCoordenadasTexto = coordenadasKML.join(" ");
 
-        // Obtener la configuración de color seleccionada por el usuario
         const colorElegido = document.getElementById("color-poligono").value;
         const codigosColor = obtenerCodigosColor(colorElegido);
 
