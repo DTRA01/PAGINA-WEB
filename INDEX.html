@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Servicios Internos — Prefectura Naval Argentina</title>
+  <link rel="stylesheet" href="css/pna-base.css">
+</head>
+<body>
+
+  <!-- Encabezado Institucional -->
+  <header class="pna-header">
+    <div>
+      <h1>Prefectura Naval Argentina</h1>
+      <small style="opacity: 0.85;">Plataforma Integrada de Herramientas de Oficina</small>
+    </div>
+    <div style="text-align: right; font-size: 0.85rem;">
+      <div>Red Interna de Oficina</div>
+      <strong>Uso Exclusivo Operativo</strong>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="pna-container">
+
+    <div class="pna-alert">
+      <strong>Acceso Restringido:</strong> Portal unificado para herramientas técnicas, operativas y administrativas de la dependencia.
+    </div>
+
+    <!-- Buscador Dinámico -->
+    <input 
+      type="text" 
+      id="inputBuscador" 
+      class="pna-search-bar" 
+      placeholder="🔍 Buscar herramienta o proyecto por nombre..." 
+      onkeyup="filtrarProyectos()"
+    >
+
+    <!-- Grilla de Accesos a Proyectos -->
+    <div class="pna-grid" id="grillaProyectos">
+
+      <!-- Proyecto 1: Polígono KML -->
+      <div class="pna-project-card">
+        <div>
+          <span class="pna-card-badge badge-operativo">Navegación / Operaciones</span>
+          <h2 class="pna-project-title">Generador de Polígonos KML</h2>
+          <p class="pna-project-desc">Herramienta para ingresar coordenadas geográficas (GMS) y exportar polígonos delimitados para Google Earth.</p>
+        </div>
+        <a href="proyectos/poligono-kml/index.html" class="btn-pna btn-pna-primary" style="text-align:center;">Abrir Herramienta</a>
+      </div>
+
+      <!-- Proyecto 2: Unificar Documentos -->
+      <div class="pna-project-card">
+        <div>
+          <span class="pna-card-badge badge-admin">Gestión / Secretaría</span>
+          <h2 class="pna-project-title">Unificador de Documentos</h2>
+          <p class="pna-project-desc">Compilador de archivos PDF, Word (.docx) e imágenes para la generación de legajos y expedientes digitales unificados.</p>
+        </div>
+        <a href="proyectos/unificar-documentos/index.html" class="btn-pna btn-pna-primary" style="text-align:center;">Abrir Herramienta</a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Pie de Página -->
+  <footer class="pna-footer">
+    <p>Prefectura Naval Argentina — Autoridad Marítima Nacional</p>
+  </footer>
+
+  <script>
+    function filtrarProyectos() {
+      const input = document.getElementById('inputBuscador').value.toLowerCase();
+      const tarjetas = document.querySelectorAll('#grillaProyectos .pna-project-card');
+
+      tarjetas.forEach(tarjeta => {
+        const texto = tarjeta.textContent.toLowerCase();
+        tarjeta.style.display = texto.includes(input) ? "flex" : "none";
+      });
+    }
+  </script>
+
+</body>
+</html>
