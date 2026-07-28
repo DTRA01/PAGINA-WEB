@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLIGONO KML — Prefectura Naval Argentina</title>
+    <link rel="stylesheet" href="../../css/pna-base.css">
+</head>
+<body>
+
+<header class="pna-header">
+    <div>
+        <h1>Prefectura Naval Argentina</h1>
+        <small style="opacity: 0.85;">Generador de Polígonos KML para Google Earth</small>
+    </div>
+    <div style="text-align: right; font-size: 0.85rem;">
+        <div>Red Interna de Oficina</div>
+        <strong>Navegación / Operaciones</strong>
+    </div>
+</header>
+
+<main class="pna-container">
+
+    <div class="pna-project-card" style="margin-bottom: 20px;">
+        <h2 class="pna-project-title">Delimitación de Áreas Operativas</h2>
+        <p class="pna-project-desc">
+            Ingrese los puntos del área en formato Grados, Minutos y Segundos (GMS)[cite: 3]. Seleccione el color deseado para la traza del polígono y presione el botón para descargar el archivo KML directo para Google Earth[cite: 3].
+        </p>
+    </div>
+
+    <table id="tabla-puntos">
+        <thead>
+            <tr>
+                <th style="width: 12%;">PUNTO</th>
+                <th>LAT GRADOS</th>
+                <th>LAT MINUTOS</th>
+                <th>LAT SEGUNDOS</th>
+                <th style="width: 8%;">HEMI</th>
+                <th>LON GRADOS</th>
+                <th>LON MINUTOS</th>
+                <th>LON SEGUNDOS</th>
+                <th style="width: 8%;">HEMI</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" value="PSN 1"></td>
+                <td><input type="number" value="47"></td>
+                <td><input type="number" value="46"></td>
+                <td><input type="number" step="any" value="0.6"></td>
+                <td><select><option value="S" selected>S</option><option value="N">N</option></select></td>
+                <td><input type="number" value="61"></td>
+                <td><input type="number" value="40"></td>
+                <td><input type="number" step="any" value="39.0"></td>
+                <td><select><option value="W" selected>W</option><option value="E">E</option></select></td>
+            </tr>
+            <tr>
+                <td><input type="text" value="PSN 2"></td>
+                <td><input type="number" value="47"></td>
+                <td><input type="number" value="3"></td>
+                <td><input type="number" step="any" value="22.8"></td>
+                <td><select><option value="S" selected>S</option><option value="N">N</option></select></td>
+                <td><input type="number" value="61"></td>
+                <td><input type="number" value="59"></td>
+                <td><input type="number" step="any" value="37.8"></td>
+                <td><select><option value="W" selected>W</option><option value="E">E</option></select></td>
+            </tr>
+            <tr>
+                <td><input type="text" value="PSN 3"></td>
+                <td><input type="number" value="46"></td>
+                <td><input type="number" value="56"></td>
+                <td><input type="number" step="any" value="0.6"></td>
+                <td><select><option value="S" selected>S</option><option value="N">N</option></select></td>
+                <td><input type="number" value="61"></td>
+                <td><input type="number" value="28"></td>
+                <td><input type="number" step="any" value="33.0"></td>
+                <td><select><option value="W" selected>W</option><option value="E">E</option></select></td>
+            </tr>
+            <tr>
+                <td><input type="text" value="PSN 4"></td>
+                <td><input type="number" value="47"></td>
+                <td><input type="number" value="38"></td>
+                <td><input type="number" step="any" value="57.0"></td>
+                <td><select><option value="S" selected>S</option><option value="N">N</option></select></td>
+                <td><input type="number" value="61"></td>
+                <td><input type="number" value="11"></td>
+                <td><input type="number" step="any" value="24.6"></td>
+                <td><select><option value="W" selected>W</option><option value="E">E</option></select></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="opciones-kml" style="margin: 20px 0;">
+        <label for="color-poligono">🎨 Color del Polígono:</label>
+        <select id="color-poligono">
+            <option value="verde" selected>Verde Línea / Relleno Transparente</option>
+            <option value="rojo">Rojo Línea / Relleno Transparente</option>
+            <option value="azul">Azul Línea / Relleno Transparente</option>
+            <option value="amarillo">Amarillo Línea / Relleno Transparente</option>
+            <option value="naranja">Naranja Línea / Relleno Transparente</option>
+        </select>
+    </div>
+
+    <div class="actions">
+        <button class="btn-pna btn-pna-primary" onclick="agregarFila()">+ Agregar Punto</button>
+        <button class="btn-pna btn-pna-primary" style="background-color: var(--pna-rojo-alerta);" onclick="quitarFila()">- Quitar Último Punto</button>
+        <button class="btn-pna btn-pna-primary" style="background-color: var(--pna-verde-exito);" onclick="descargarKML()">📥 Generar KML</button>
+        <a href="../../index.html" class="btn-pna" style="background-color: #6c757d; color: white; text-decoration: none; margin-left: 10px;">Volver al Portal</a>
+    </div>
+
+</main>
+
+<footer class="pna-footer">
+    <p>Prefectura Naval Argentina — Autoridad Marítima Nacional</p>
+</footer>
+
+<script>
+    function agregarFila() {
+        const tbody = document.querySelector("#tabla-puntos tbody");
+        const rowCount = tbody.rows.length + 1;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><input type="text" value="PSN ${rowCount}"></td>
+            <td><input type="number" placeholder="0"></td>
+            <td><input type="number" placeholder="0"></td>
+            <td><input type="number" step="any" placeholder="0.0"></td>
+            <td><select><option value="S" selected>S</option><option value="N">N</option></select></td>
+            <td><input type="number" placeholder="0"></td>
+            <td><input type="number" placeholder="0"></td>
+            <td><input type="number" step="any" placeholder="0.0"></td>
+            <td><select><option value="W" selected>W</option><option value="E">E</option></select></td>
+        `;
+        tbody.appendChild(tr);
+    }
+
+    function quitarFila() {
+        const tbody = document.querySelector("#tabla-puntos tbody");
+        if (tbody.rows.length > 3) {
+            tbody.removeChild(tbody.lastChild);
+        } else {
+            alert("El polígono necesita un mínimo de 3 puntos.");
+        }
+    }
+
+    function convertirADecimal(grados, minutos, segundos, hemisferio) {
+        let g = parseFloat(grados) || 0;
+        let m = parseFloat(minutos) || 0;
+        let s = parseFloat(segundos) || 0;
+        
+        let decimal = g + (m / 60) + (s / 3600);
+        
+        if (hemisferio === "S" || hemisferio === "W") {
+            decimal = -decimal;
+        }
+        return decimal.toFixed(6);
+    }
+
+    function obtenerCodigosColor(colorSeleccionado) {
+        switch(colorSeleccionado) {
+            case 'rojo':
+                return { linea: 'ff0000ff', relleno: '400000ff' };
+            case 'azul':
+                return { linea: 'ffff0000', relleno: '40ff0000' };
+            case 'amarillo':
+                return { linea: 'ff00ffff', relleno: '4000ffff' };
+            case 'naranja':
+                return { linea: 'ff00a5ff', relleno: '4000a5ff' };
+            case 'verde':
+            default:
+                return { linea: 'ff00ff00', relleno: '4000ff00' };
+        }
+    }
+
+    function descargarKML() {
+        const rows = document.querySelectorAll("#tabla-puntos tbody tr");
+        let coordenadasKML = [];
+        let primerPunto = "";
+
+        for (let i = 0; i < rows.length; i++) {
+            const inputs = rows[i].querySelectorAll("input, select");
+            
+            const gLat = inputs[1].value;
+            const mLat = inputs[2].value;
+            const sLat = inputs[3].value;
+            const hLat = inputs[4].value;
+            
+            const gLon = inputs[5].value;
+            const mLon = inputs[6].value;
+            const sLon = inputs[7].value;
+            const hLon = inputs[8].value;
+
+            if (!gLat || !gLon) continue;
+
+            const latDec = convertirADecimal(gLat, mLat, sLat, hLat);
+            const lonDec = convertirADecimal(gLon, mLon, sLon, hLon);
+            
+            const ptoStr = `${lonDec},${latDec},0`;
+            coordenadasKML.push(ptoStr);
+
+            if (i === 0) {
+                primerPunto = ptoStr;
+            }
+        }
+
+        if (coordenadasKML.length < 3) {
+            alert("Por favor ingrese al menos 3 o 4 puntos válidos antes de generar.");
+            return;
+        }
+
+        coordenadasKML.push(primerPunto);
+        const listaCoordenadasTexto = coordenadasKML.join(" ");
+
+        const colorElegido = document.getElementById("color-poligono").value;
+        const codigosColor = obtenerCodigosColor(colorElegido);
+
+        const kmlCompleto = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Poligono de Operaciones</name>
+    <Style id="estiloPoligono">
+      <LineStyle>
+        <color>${codigosColor.linea}</color>
+        <width>3</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>${codigosColor.relleno}</color>
+      </PolyStyle>
+    </Style>
+    <Placemark>
+      <name>Area Delimitada</name>
+      <styleUrl>#estiloPoligono</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>${listaCoordenadasTexto}</coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>`;
+        
+        const blob = new Blob([kmlCompleto], { type: "application/vnd.google-earth.kml+xml" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Poligono_Area.kml";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+</script>
+
+</body>
+</html>
